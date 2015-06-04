@@ -22,7 +22,24 @@ public class RepositeryService {
     @Autowired
     private Neo4jTemplate template;
 
-    public void mytest1() {
+    public List<Person> MyFrinds(String name) {
+        return personRepository.frinds(name);
+    }
+
+    public List<Person> follower(String name) {
+        return personRepository.follower(name);
+    }
+
+    public List<Person> follwoings(String name) {
+        return personRepository.follwoings(name);
+    }
+
+    public List<Person> sugestFrindes(String name) {
+        return personRepository.sugestFrindes(name);
+    }
+
+
+    public void create() {
 
 
         List<Person> personList = Arrays.asList(
@@ -32,6 +49,8 @@ public class RepositeryService {
                 new Person("mac"),
                 new Person("noor"));
         personRepository.save(personList);
+
+
         areFrinds(personList.get(2).getName(), personList.get(3).getName());
         areFrinds(personList.get(0).getName(), personList.get(3).getName());
         areFrinds(personList.get(2).getName(), personList.get(4).getName());
@@ -40,13 +59,14 @@ public class RepositeryService {
         areFrinds(personList.get(1).getName(), personList.get(3).getName());
         areFrinds(personList.get(1).getName(), personList.get(0).getName());
 
-        isFollowed(personList.get(0).getName(), Arrays.asList(new Person("adel"),
-                new Person("mac")
+        isFollowed(personList.get(0).getName(), Arrays.asList(personList.get(2),
+                personList.get(3)
         ));
-        isFollowed(personList.get(1).getName(), Arrays.asList(new Person("adel"),
-                new Person("mac"),
-                new Person("ashraf"),
-                new Person("noor")
+        isFollowed(personList.get(1).getName(), Arrays.asList(
+                personList.get(0),
+                personList.get(2),
+                personList.get(3),
+                personList.get(4)
         ));
 
     }
@@ -65,6 +85,4 @@ public class RepositeryService {
         template.createRelationshipBetween(personRepository.findByName(name1),
                 personRepository.findByName(name2), Friendship.class, "ARE_FRIENDS", false);
     }
-
-
 }

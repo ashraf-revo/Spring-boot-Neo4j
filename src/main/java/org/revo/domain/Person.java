@@ -1,6 +1,7 @@
 package org.revo.domain;
 
 import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
@@ -22,12 +23,16 @@ public class Person {
     @RelatedToVia(type = "FOLLOW_BY", direction = Direction.OUTGOING)
     private Set<Followship> followers = new HashSet<>();
 
-
     public Person() {
     }
 
     public Person(String name) {
         this();
+        this.name = name;
+    }
+
+    public Person(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
